@@ -1,0 +1,2 @@
+async function requisitar(url, opcoes) { const resposta = await fetch(url, opcoes); const corpo = await resposta.json(); if (!resposta.ok) throw new Error(corpo.erro?.mensagem || 'Não foi possível concluir a solicitação.'); return corpo; }
+export const api = { regioes: () => requisitar('/api/regioes'), estrategias: () => requisitar('/api/estrategias'), simular: dados => requisitar('/api/simulacoes', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(dados)}) };

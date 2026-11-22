@@ -1,4 +1,3 @@
-import json
 import math
 
 from backend.repositories.setores_repository import RepositorioSetores
@@ -24,5 +23,7 @@ class ServicoGeografia:
         features = []
         for _, setor in setores.iterrows():
             propriedades = {campo: _valor_json(setor[campo]) for campo in campos}
+            ponto = setor.geometry.representative_point()
+            propriedades["ponto_representativo"] = [ponto.x, ponto.y] if not ponto.is_empty else None
             features.append({"type": "Feature", "properties": propriedades, "geometry": setor.geometry.__geo_interface__})
         return {"type": "FeatureCollection", "features": features, "metadata": {"fonte": "IBGE, Censo Demográfico 2022", "quantidade_setores": len(features), "crs": "EPSG:4326"}}

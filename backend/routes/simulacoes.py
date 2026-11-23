@@ -3,6 +3,7 @@ from flask import Blueprint, jsonify, request
 from backend.routes.regioes import geografia
 from backend.services.distribuicao_service import ServicoDistribuicao
 from backend.strategies import ESTRATEGIAS
+from backend.strategies.base import SemSetoresElegiveis
 
 bp = Blueprint("simulacoes", __name__, url_prefix="/api")
 
@@ -29,6 +30,8 @@ def criar_simulacao():
     try:
         setores = geografia.setores()
         distribuicao, elegiveis, avisos = ServicoDistribuicao().simular(setores, estrategia, quantidade)
+    except SemSetoresElegiveis as exc:
+        return erro(str(exc), 422)
     except (FileNotFoundError, ValueError) as exc:
         return erro(str(exc), 503)
     itens = [{"cd_setor": codigo, "quantidade": valor} for codigo, valor in distribuicao.items()]

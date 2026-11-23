@@ -1,4 +1,4 @@
-export const RAIO_COBERTURA = 75;
+export const RAIO_COBERTURA = 150
 
 export const CONFIG_RECURSOS = {
   viatura: {

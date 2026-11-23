@@ -1,6 +1,10 @@
 from abc import ABC, abstractmethod
 
 
+class SemSetoresElegiveis(ValueError):
+    """O critério selecionado não encontrou setores elegíveis."""
+
+
 class EstrategiaDistribuicao(ABC):
     """Contrato Strategy: cada critério entrega pesos por setor."""
 
